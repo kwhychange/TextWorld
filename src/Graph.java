@@ -47,6 +47,10 @@ public class Graph {
         return animals;
     }
 
+    public void removeNode(String room) {
+        nodes.remove(room);
+    }
+
     public class Node {
         private String name;
         private HashMap<String, Node> neighbors;

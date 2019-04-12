@@ -2,14 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class wumpus extends Animal {
-    public wumpus(String name, Graph.Node currentRoom){
+    private Player player;
+    public wumpus(String name, Graph.Node currentRoom, Player player) {
         super(name, currentRoom);
+        this.player = player;
     }
 
-    public void move(Graph.Node playerRoom) {
+    public void move() {
         List<Graph.Node> neighbors = currentRoom.getNeighbors();
-        List<Graph.Node> pNeighbors = playerRoom.getNeighbors();
-        List<Graph.Node> notAdjacent = findNoneAdjacentRoom(neighbors,pNeighbors,playerRoom);
+        List<Graph.Node> pNeighbors = player.getCurrentRoom().getNeighbors();
+        List<Graph.Node> notAdjacent = findNoneAdjacentRoom(neighbors, pNeighbors, player.getCurrentRoom());
         int size = notAdjacent.size();
         int random = (int) (size * Math.random());
         if (neighbors.size() > 0) {
@@ -25,7 +27,7 @@ public class wumpus extends Animal {
         ArrayList<Graph.Node> noAdjacent = new ArrayList<>();
         for (int i = 0; i < neighbors.size(); i++) {
             for (int j = 0; j < pNeighbors.size(); j++) {
-                if(!neighbors.get(i).equals(pNeighbors.get(j)) && !neighbors.get(i).equals(playerRoom)){
+                if (!neighbors.get(i).equals(pNeighbors.get(j)) && !neighbors.get(i).equals(playerRoom)) {
                     noAdjacent.add(neighbors.get(i));
                 }
             }

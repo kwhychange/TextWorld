@@ -1,24 +1,26 @@
 import java.util.List;
 
 public class popstar extends Animal {
-    public popstar(String name, Graph.Node currentRoom) {
+    private Player player;
+    public popstar(String name, Graph.Node currentRoom, Player player) {
         super(name, currentRoom);
+        this.player = player;
     }
 
-    public void move(Graph.Node playerRoom) {
+    public void move() {
         List<Graph.Node> neighbors = currentRoom.getNeighbors();
-        List<Graph.Node> pNeighbors = playerRoom.getNeighbors();
+        List<Graph.Node> pNeighbors = player.getCurrentRoom().getNeighbors();
         Graph.Node goTo = findSharesAdjacentRoom(neighbors, pNeighbors);
-        Graph.Node nextTo = findAdjacentRoom(neighbors, playerRoom);
+        Graph.Node nextTo = findAdjacentRoom(neighbors, player.getCurrentRoom());
         if (neighbors.size() > 0) {
             if (goTo != null) {
                 System.out.println(getName() + " moving closer from " + currentRoom.getName() + " to " + goTo.getName());
                 goTo.addAnimal(currentRoom.removeAnimal(getName()));
                 setCurrentRoom(goTo);
             } else if (nextTo != null) {
-                System.out.println(getName() + " moving closer from " + currentRoom.getName() + " to " + playerRoom.getName());
-                playerRoom.addAnimal(currentRoom.removeAnimal(getName()));
-                setCurrentRoom(playerRoom);
+                System.out.println(getName() + " moving closer from " + currentRoom.getName() + " to " + player.getCurrentRoom().getName());
+                player.getCurrentRoom().addAnimal(currentRoom.removeAnimal(getName()));
+                setCurrentRoom(player.getCurrentRoom());
             } else {
                 int size = currentRoom.getNeighbors().size();
                 int random = (int) (size * Math.random());

@@ -22,4 +22,6 @@ public abstract class Animal {
         this.name = name;
         this.currentRoom = currentRoom;
     }
+
+    public abstract void move();
 }
